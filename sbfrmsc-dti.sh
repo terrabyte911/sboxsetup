@@ -997,8 +997,9 @@ echo ""
 echo -e "\033[0;32;148mPlease login as main user and only then close this Window\033[39m"
 
 # Permit root login with rsa auth
-sed -Ei 's/PermitRootLogin yes|PermitRootLogin no/PermitRootLogin without-password/g' /etc/ssh/sshd_config
+#sed -Ei 's/PermitRootLogin yes|PermitRootLogin no/PermitRootLogin without-password/g' /etc/ssh/sshd_config
 
+#Add public key for user
 mkdir /home/$NEWUSER1/.ssh
 touch /home/$NEWUSER1/.ssh/authorized_keys2
 chmod 600 /home/$NEWUSER1/.ssh/authorized_keys2
