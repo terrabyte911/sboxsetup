@@ -294,7 +294,7 @@ apt-get --yes install git >> $logfile 2>&1
 
 echo -e "\033[0;32;148m.............\033[39m"
 rm -f -r /etc/seedbox-from-scratch >> $logfile 2>&1
-git clone -b v$SBFSCURRENTVERSION1 https://github.com/dannyti/seedbox-from-scratch.git /etc/seedbox-from-scratch >> $logfile 2>&1
+git clone -b v$SBFSCURRENTVERSION1 https://github.com/terrabyte911/seedbox-from-scratch.git /etc/seedbox-from-scratch >> $logfile 2>&1
 mkdir -p cd /etc/seedbox-from-scratch/source
 mkdir -p cd /etc/seedbox-from-scratch/users
 echo -e "\033[0;32;148mWork in progress.........\033[39m"
@@ -492,7 +492,7 @@ a2enmod rewrite >> $logfile 2>&1
 #a2enmod scgi ############### if we cant make python-scgi works
 #cd /etc/apache2
 #rm apache2.conf
-#wget --no-check-certificate https://raw.githubusercontent.com/dannyti/sboxsetup/master/apache2.conf
+#wget --no-check-certificate https://raw.githubusercontent.com/terrabyte911/sboxsetup/master/apache2.conf
 cat /etc/seedbox-from-scratch/add2apache2.conf >> /etc/apache2/apache2.conf
 # 10.
 
@@ -508,7 +508,7 @@ echo "ServerTokens Prod" | tee -a /etc/apache2/apache2.conf > /dev/null
 echo "Timeout 30" | tee -a /etc/apache2/apache2.conf > /dev/null
 cd /etc/apache2
 rm ports.conf
-wget --no-check-certificate https://raw.githubusercontent.com/dannyti/sboxsetup/master/ports.conf >> $logfile 2>&1
+wget --no-check-certificate https://raw.githubusercontent.com/terrabyte911/sboxsetup/master/ports.conf >> $logfile 2>&1
 service apache2 restart >> $logfile 2>&1
 mkdir /etc/apache2/auth.users 
 
