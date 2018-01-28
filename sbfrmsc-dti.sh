@@ -294,7 +294,7 @@ apt-get --yes install git >> $logfile 2>&1
 
 echo -e "\033[0;32;148m.............\033[39m"
 rm -f -r /etc/seedbox-from-scratch >> $logfile 2>&1
-git clone -b v$SBFSCURRENTVERSION1 https://github.com/terrabyte911/seedbox-from-scratch.git /etc/seedbox-from-scratch >> $logfile 2>&1
+git clone https://github.com/terrabyte911/seedbox-from-scratch.git /etc/seedbox-from-scratch >> $logfile 2>&1
 mkdir -p cd /etc/seedbox-from-scratch/source
 mkdir -p cd /etc/seedbox-from-scratch/users
 echo -e "\033[0;32;148mWork in progress.........\033[39m"
