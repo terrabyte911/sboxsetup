@@ -386,6 +386,7 @@ apt-get --yes install zip >> $logfile 2>&1
 
 apt-get --yes install ffmpeg >> $logfile 2>&1
 apt-get --yes install automake1.9 >> $logfile 2>&1
+apt-get --yes install sox >> $logfile 2>&1
 
 apt-get --force-yes --yes install rar >> $logfile 2>&1
 if [ $? -gt 0 ]; then
