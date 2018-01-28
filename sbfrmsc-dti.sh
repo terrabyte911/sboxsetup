@@ -265,7 +265,7 @@ PASSWORD2=b
 getString NO  "You need to create an user for your seedbox: " NEWUSER1
 getString YES "Password for user $NEWUSER1: " PASSWORD1
 getString NO  "IP address of your box: " IPADDRESS1 $IPADDRESS1
-getString NO  "SSH port: " NEWSSHPORT1 21976
+getString NO  "SSH port: " NEWSSHPORT1 22222
 getString NO  "vsftp port (usually 21): " NEWFTPPORT1 21201
 getString NO  "OpenVPN port: " OPENVPNPORT1 31195
 #getString NO  "Do you want to have some of your users in a chroot jail? " CHROOTJAIL1 YES
@@ -314,7 +314,7 @@ fi
 #set -x verbose
 # 4.
 perl -pi -e "s/Port 22/Port $NEWSSHPORT1/g" /etc/ssh/sshd_config
-perl -pi -e "s/PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
+perl -pi -e "s/PermitRootLogin yes/PermitRootLogin without-password/g" /etc/ssh/sshd_config
 perl -pi -e "s/#Protocol 2/Protocol 2/g" /etc/ssh/sshd_config
 perl -pi -e "s/X11Forwarding yes/X11Forwarding no/g" /etc/ssh/sshd_config
 
@@ -331,7 +331,7 @@ echo "AllowGroups sshdusers root" >> /etc/ssh/sshd_config
 echo "Match Group sftponly" >> /etc/ssh/sshd_config
 echo "ChrootDirectory %h" >> /etc/ssh/sshd_config
 echo "ForceCommand internal-sftp" >> /etc/ssh/sshd_config
-echo "AllowTcpForwarding no" >> /etc/ssh/sshd_config
+echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config
 #fi
 
 service ssh reload >> $logfile 2>&1
@@ -995,6 +995,17 @@ echo ""
 echo "System will reboot now, but don't close this window until you take note of the port number: $NEWSSHPORT1"
 echo ""
 echo -e "\033[0;32;148mPlease login as main user and only then close this Window\033[39m"
+
+# Permit root login with rsa auth
+sed -Ei 's/PermitRootLogin yes|PermitRootLogin no/PermitRootLogin without-password/g' /etc/ssh/sshd_config
+
+mkdir /home/$NEWUSER1/.ssh
+touch /home/$NEWUSER1/.ssh/authorized_keys2
+chmod 600 /home/$NEWUSER1/.ssh/authorized_keys2
+chmod 700 /home/$NEWUSER1/.ssh
+chown $NEWUSER1:$NEWUSER1 /home/$NEWUSER1/.ssh
+chown $NEWUSER1:$NEWUSER1 /home/$NEWUSER1/.ssh/authorized_keys2
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQBTiS1DLMHL30mFFHA/lUO/3q0twnBn+k8A3+IMKR/Wnff0JVBgcGAqzJRuSGo49kI7FQ4KrevKSP6uQakuIqCmuHJSqU05804dFldKbujJxSGbRRci0PM/fTywLwzmvedrIyzA81AvLABFzteNRWBgPuiyldXbF3kPI0P6odYdtyf4nXkOhtAcRH/1K8cEVO0jdxDgXDSEcow0qmo3HNPY0xLNDcvX4blcGY2u1OLAomWKn1pTZw75grEfh2/TIYe7H3dbD6sYPAc6MFNwMZ5B8/Ia3bGTKA6JQDl7XN9D8AGlr+jBw9Cj9BBReyDe57Y9xMIfa9u6bzIJ7zmr0on/ rsa-key-20151007" >> /home/$NEWUSER1/.ssh/authorized_keys2
 
 reboot
 
