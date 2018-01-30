@@ -255,7 +255,8 @@ clear
 # 1.
 
 #localhost is ok this rtorrent/rutorrent installation
-IPADDRESS1=`ifconfig | sed -n 's/.*inet addr:\([0-9.]\+\)\s.*/\1/p' | grep -v 127 | head -n 1`
+#IPADDRESS1=`ifconfig | sed -n 's/.*inet addr:\([0-9.]\+\)\s.*/\1/p' | grep -v 127 | head -n 1`
+IPADDRESS1=$(wget -qO- ipv4.icanhazip.com)
 CHROOTJAIL1=NO
 
 #those passwords will be changed in the next steps
