@@ -293,12 +293,14 @@ apt-get --yes update >> $logfile 2>&1
 apt-get --yes install whois sudo makepasswd nano >> $logfile 2>&1
 apt-get --yes install git >> $logfile 2>&1
 
-echo -e "\033[0;32;148m.............\033[39m"
+#echo -e "\033[0;32;148m.............\033[39m"
+
 rm -f -r /etc/seedbox-from-scratch >> $logfile 2>&1
 git clone https://github.com/terrabyte911/seedbox-from-scratch.git /etc/seedbox-from-scratch >> $logfile 2>&1
 mkdir -p cd /etc/seedbox-from-scratch/source
 mkdir -p cd /etc/seedbox-from-scratch/users
-echo -e "\033[0;32;148mWork in progress.........\033[39m"
+
+#echo -e "\033[0;32;148mWork in progress.........\033[39m"
 
 if [ ! -f /etc/seedbox-from-scratch/seedbox-from-scratch.sh ]; then
   echo ""
@@ -310,6 +312,7 @@ if [ ! -f /etc/seedbox-from-scratch/seedbox-from-scratch.sh ]; then
 fi
 
 # 3.1
+echo -e "\033[0;32;148m1/20\033[39m"
 
 #show all commands
 #set -x verbose
@@ -337,6 +340,8 @@ echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config
 
 service ssh reload >> $logfile 2>&1
 
+echo -e "\033[0;32;148m2/20\033[39m"
+
 # 6.
 #remove cdrom from apt so it doesn't stop asking for it
 perl -pi -e "s/deb cdrom/#deb cdrom/g" /etc/apt/sources.list
@@ -354,7 +359,8 @@ if [ "$OSV11" = "8" ]; then
   apt-get --force-yes --yes install ffmpeg >> $logfile 2>&1
 fi
 
-echo -e "\033[0;32;148m.....\033[39m"
+echo -e "\033[0;32;148m3/20\033[39m"
+
 # 7.
 # update and upgrade packages
 apt-get --yes install python-software-properties software-properties-common >> $logfile 2>&1
@@ -378,6 +384,8 @@ fi
 
 apt-get --yes install libapache2-mod-php5 php5 php5-cli php5-dev php5-curl php5-geoip php5-mcrypt php5-gd php5-xmlrpc >> $logfile 2>&1
 
+echo -e "\033[0;32;148m4/20\033[39m"
+
 if [ "$OSV1" = "16.04" ]; then
   apt-get --yes install php libapache2-mod-php php-mcrypt php-mysql php-xml >> $logfile 2>&1
 fi
@@ -393,6 +401,8 @@ apt-get --force-yes --yes install rar >> $logfile 2>&1
 if [ $? -gt 0 ]; then
   apt-get --yes install rar-free >> $logfile 2>&1
 fi
+
+echo -e "\033[0;32;148m5/20\033[39m"
 
 #apt-get --yes install unrar
 #if [ $? -gt 0 ]; then
@@ -416,7 +426,8 @@ if [ "$CHROOTJAIL1" = "YES" ]; then
   bash /etc/seedbox-from-scratch/updatejkinit >> $logfile 2>&1
 fi
 
-echo -e "\033[0;32;148mGo make coffee......\033[39m"
+echo -e "\033[0;32;148m6/20\033[39m"
+
 # 8.1 additional packages for Ubuntu
 # this is better to be apart from the others
 apt-get --yes install php5-fpm >> $logfile 2>&1
@@ -451,6 +462,8 @@ for i in $(seq 2 1000)
 do
   echo "RPC$i"  | tee -a /etc/seedbox-from-scratch/rpc.txt > /dev/null
 done
+
+echo -e "\033[0;32;148m7/20\033[39m"
 
 # 8.4
 if [ "$INSTALLWEBMIN1" = "YES" ]; then
@@ -516,6 +529,8 @@ mkdir /etc/apache2/auth.users
 
 echo "$IPADDRESS1" > /etc/seedbox-from-scratch/hostname.info
 
+echo -e "\033[0;32;148m8/20\033[39m"
+
 # 11.
 makepasswd | tee -a /etc/seedbox-from-scratch/sslca.info > /dev/null
 export TEMPHOSTNAME1=tsfsSeedBox
@@ -542,6 +557,8 @@ elif [ "$OSV1" = "12.04" ]; then
 else
   apt-get -y install vsftpd >> $logfile 2>&1
 fi
+
+echo -e "\033[0;32;148m9/20\033[39m"
 
 
 #if [ "$OSV1" = "12.04" ]; then
@@ -583,6 +600,9 @@ apt-get install --yes subversion >> $logfile 2>&1
 apt-get install --yes dialog >> $logfile 2>&1
 # 13.
 
+echo -e "\033[0;32;148m10/20\033[39m"
+
+
 if [ "$OSV1" = "14.04" ] || [ "$OSV1" = "14.10" ] || [ "$OSV1" = "15.04" ] || [ "$OSV1" = "15.10" ] || [ "$OSV1" = "16.04" ] || [ "$OSV11" = "8" ]; then
   cp /var/www/html/index.html /var/www/index.html 
   mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.ORI
@@ -607,7 +627,7 @@ fi
 #perl -pi -e "s/<username>/$NEWUSER1/g" /etc/apache2/sites-available/default
 
 echo "ServerName $IPADDRESS1" | tee -a /etc/apache2/apache2.conf > /dev/null
-echo -e "\033[0;32;148mHow was the coffee ?\033[39m"
+#echo -e "\033[0;32;148mHow was the coffee ?\033[39m"
 # 14.
 a2ensite default-ssl >> $logfile 2>&1
 #ln -s /etc/apache2/mods-available/scgi.load /etc/apache2/mods-enabled/scgi.load
@@ -643,6 +663,8 @@ else
 fi
 # 15.
 
+echo -e "\033[0;32;148m11/20\033[39m"
+
 
 # 16.
 #cd xmlrpc-c-1.16.42 ### old, but stable, version, needs a missing old types.h file
@@ -650,7 +672,7 @@ fi
 
 
 # 21.
-echo -e "\033[0;32;148mDo not give up on me.........Still Working....\033[39m"
+# echo -e "\033[0;32;148mDo not give up on me.........Still Working....\033[39m"
 bash /etc/seedbox-from-scratch/installRTorrent $RTORRENT1 >> $logfile 2>&1
 
 ######### Below this /var/www/rutorrent/ has been replaced with /var/www/rutorrent for Ubuntu 14.04
@@ -668,6 +690,8 @@ groupadd admin >> $logfile 2>&1
 echo "www-data ALL=(root) NOPASSWD: /usr/sbin/repquota" | tee -a /etc/sudoers > /dev/null
 
 cp /etc/seedbox-from-scratch/favicon.ico /var/www/
+
+echo -e "\033[0;32;148m12/20\033[39m"
 
 # 26. Installing Mediainfo from source
 apt-get install --yes mediainfo >> $logfile 2>&1 
@@ -693,6 +717,8 @@ git clone https://github.com/autodl-community/autodl-rutorrent.git autodl-irssi 
 #svn co https://svn.code.sf.net/p/autodl-irssi/code/trunk/rutorrent/autodl-irssi/
 cd autodl-irssi
 
+echo -e "\033[0;32;148m13/20\033[39m"
+
 
 # 30. 
 
@@ -717,6 +743,8 @@ if [ "$INSTALLFAIL2BAN1" = "YES" ]; then
   fi
   fail2ban-client reload >> $logfile 2>&1
 fi
+
+echo -e "\033[0;32;148m14/20\033[39m"
 
 #33. Tuning Part - Let me know if you find more.
 echo "vm.swappiness=1"  >>/etc/sysctl.conf
@@ -795,6 +823,8 @@ chmod -R 755 /var/www/rutorrent
 
 apt-get --yes install gdebi >> $logfile 2>&1
 
+echo -e "\033[0;32;148m15/20\033[39m"
+
 #32.3
 perl -pi -e "s/\\\$topDirectory\, \\\$fm/\\\$homeDirectory\, \\\$topDirectory\, \\\$fm/g" /var/www/rutorrent/plugins/filemanager/flm.class.php
 perl -pi -e "s/\\\$this\-\>userdir \= addslash\(\\\$topDirectory\)\;/\\\$this\-\>userdir \= \\\$homeDirectory \? addslash\(\\\$homeDirectory\) \: addslash\(\\\$topDirectory\)\;/g" /var/www/rutorrent/plugins/filemanager/flm.class.php
@@ -829,8 +859,10 @@ perl -pi -e "s/<servername>/$IPADDRESS1/g" /var/www/rutorrent/plugins/fileshare/
 
 mv /etc/seedbox-from-scratch/unpack.conf.php /var/www/rutorrent/plugins/unpack/conf.php
 
+echo -e "\033[0;32;148m16/20\033[39m"
+
 # 33.
-echo -e "\033[0;32;148m.................\033[39m"
+#echo -e "\033[0;32;148m.................\033[39m"
 bash /etc/seedbox-from-scratch/updateExecutables >> $logfile 2>&1
 
 #34.
@@ -876,6 +908,8 @@ echo -e "\033[0;32;148mLeave it now, About to Finish........\033[39m"
 #  createSeedboxUser <username> <password> <user jailed?> <ssh access?> <Chroot User>
 bash /etc/seedbox-from-scratch/createSeedboxUser $NEWUSER1 $PASSWORD1 YES YES YES NO >> $logfile 2>&1
 
+echo -e "\033[0;32;148m17/20\033[39m"
+
 #Loadavg
 cd ~
 git clone https://github.com/loadavg/loadavg.git >> $logfile 2>&1
@@ -903,6 +937,8 @@ rm unrarsrc-5.3.8.tar.gz
 
 sed -i 's/width: 380px; height: 290px/width: 380px; height: 330px/' /var/www/rutorrent/css/style.css
 
+echo -e "\033[0;32;148m18/20\033[39m"
+
 cd ~
 wget --no-check-certificate https://bintray.com/artifact/download/hectortheone/base/pool/m/m/magic/magic.zip >> $logfile 2>&1
 unzip magic.zip >> $logfile 2>&1
@@ -923,6 +959,8 @@ cd ~/plowshare
 make install >> $logfile 2>&1
 cd
 rm -r plowshare >> $logfile 2>&1
+
+echo -e "\033[0;32;148m19/20\033[39m"
 
 cp  /etc/seedbox-from-scratch/nano/ini.nanorc /usr/share/nano/ini.nanorc
 cp  /etc/seedbox-from-scratch/nano/conf.nanorc /usr/share/nano/conf.nanorc
@@ -971,6 +1009,8 @@ gdebi -n vcs_1.13.2-pon.1_all.deb >> $logfile 2>&1
 sleep 1
 rm -f *.deb
 #rm -rf cd usr
+
+echo -e "\033[0;32;148m20/20\033[39m"
 echo -e "\033[0;32;148mFinishing Now .... .... .... ....\033[39m"
 
 if [ "$OSV11" = "8" ]; then
