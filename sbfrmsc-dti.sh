@@ -473,6 +473,9 @@ if [ "$INSTALLWEBMIN1" = "YES" ]; then
   apt-get install -y webmin >> $logfile 2>&1
   # copy custom commands
   cp -a /etc/seedbox-from-scratch/webmin/custom/. /etc/webmin/custom/
+  # copy filemin config
+  cp -a /etc/seedbox-from-scratch/webmin/filemin/. /root/.filemin/
+    
 fi
 
 #if [ "$INSTALLWEBMIN1" = "YES" ]; then
