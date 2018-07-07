@@ -471,6 +471,8 @@ if [ "$INSTALLWEBMIN1" = "YES" ]; then
   wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add - >> $logfile 2>&1
   apt-get update >> $logfile 2>&1
   apt-get install -y webmin >> $logfile 2>&1
+  # copy custom commands
+  cp -a /etc/seedbox-from-scratch/webmin/custom/. /etc/webmin/custom/
 fi
 
 #if [ "$INSTALLWEBMIN1" = "YES" ]; then
